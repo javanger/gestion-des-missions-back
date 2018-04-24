@@ -28,7 +28,7 @@ pipeline {
                sshagent(["${GIT_CREDENTIAL_ID}"]) {
                   sh "git checkout ${GIT_BRANCH}"
                   sh "git pull"
-                  sh "git push ${PROD_GIT} ${GIT_BRANCH}:master"
+                  sh "git push --force ${PROD_GIT} ${GIT_BRANCH}:master"
                   slackSend channel: '#jenkins_nantes', color: 'good', message: "Déploiement en cours chez Clever Cloud ! ${env.JOB_NAME} commit ${env.GIT_COMMIT}"
                }
             }
