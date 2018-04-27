@@ -3,17 +3,22 @@
  */
 package dev.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * @author Alexis Darcy
  *
  */
+@Entity
 public class LigneDeFrais {
 
 	/**
@@ -21,22 +26,26 @@ public class LigneDeFrais {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
+	private Integer id;
 	/**
 	 * date: LocalDate
 	 */
 	@Column(name = "DATE")
-	LocalDate date;
+	private LocalDate date;
 	/**
 	 * nature: String
 	 */
 	@Column(name = "NATURE")
-	String nature;
+	private String nature;
 	/**
 	 * montant: Float
 	 */
 	@Column(name = "MONTANT")
-	Float montant;
+	private BigDecimal montant;
+	
+	@ManyToOne
+	@JoinColumn(name="ID_NOTE_DE_FRAIS")
+	private NoteDeFrais noteDeFrais;
 
 	/** constructor */
 	public LigneDeFrais() {
@@ -44,7 +53,7 @@ public class LigneDeFrais {
 	}
 
 	/** constructor */
-	public LigneDeFrais(LocalDate date, String nature, Float montant) {
+	public LigneDeFrais(LocalDate date, String nature, BigDecimal montant) {
 		super();
 		this.date = date;
 		this.nature = nature;
@@ -99,7 +108,7 @@ public class LigneDeFrais {
 	/**
 	 * @return the montant
 	 */
-	public Float getMontant() {
+	public BigDecimal getMontant() {
 		return montant;
 	}
 
@@ -107,7 +116,7 @@ public class LigneDeFrais {
 	 * @param montant
 	 *            the montant to set
 	 */
-	public void setMontant(Float montant) {
+	public void setMontant(BigDecimal montant) {
 		this.montant = montant;
 	}
 
