@@ -30,5 +30,4 @@ public enum Role {
 	public void setCategorie(String categorie) {
 		this.categorie = categorie;
 	}
-	
 }
