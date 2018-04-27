@@ -5,12 +5,16 @@ package dev.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import dev.model.Role;
 
 /**
  * @author Alexis Darcy
@@ -28,9 +32,13 @@ public class Collaborateur {
 	/** matricule : String */
 	@Column(name = "MATRICULE", nullable = false, unique = true)
 	private String matricule;
+	/** motDePasse : String */
+	@Column(name = "MOT_DE_PASSE", nullable = false)
+	private String motDePasse;
 	/** role : String */
-	@Column(name = "ROLE", nullable = false, unique = true)
-	private String role;
+	@Column(name = "ROLE", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Role role;
 
 	/**
 	 * Constructeur
@@ -44,11 +52,13 @@ public class Collaborateur {
 	 * Constructeur
 	 * 
 	 * @param matricule
+	 * @param motDePasse
 	 * @param role
 	 */
-	public Collaborateur(String matricule, String role) {
+	public Collaborateur(String matricule, String motDePasse, Role role) {
 		super();
 		this.matricule = matricule;
+		this.motDePasse = motDePasse;
 		this.role = role;
 	}
 
@@ -83,9 +93,28 @@ public class Collaborateur {
 	/**
 	 * Getter
 	 * 
+	 * @return the motDePasse
+	 */
+	public String getMotDePasse() {
+		return motDePasse;
+	}
+
+	/**
+	 * Setter
+	 * 
+	 * @param motDePasse
+	 *            the motDePasse to set
+	 */
+	public void setMotDePasse(String motDePasse) {
+		this.motDePasse = motDePasse;
+	}
+
+	/**
+	 * Getter
+	 * 
 	 * @return the role
 	 */
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
@@ -95,8 +124,7 @@ public class Collaborateur {
 	 * @param role
 	 *            the role to set
 	 */
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
-
 }
