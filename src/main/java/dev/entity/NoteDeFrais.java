@@ -7,7 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * @author Alexis Darcy
@@ -22,11 +23,6 @@ public class NoteDeFrais {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	Integer id;
-	/**
-	 * ligneDeFrais: LigneDeFrais
-	 */
-	@Column(name = "LIGNE_DE_FRAIS")
-	LigneDeFrais ligneDeFrais;
 	/**
 	 * dateCreation: LocalDateTime
 	 */
@@ -50,7 +46,8 @@ public class NoteDeFrais {
 	/**
 	 * mission: Mission
 	 */
-	@OneToMany
+	@ManyToOne
+    @JoinColumn(name="ID_MISSION")
 	Mission mission;
 
 	/**
@@ -60,10 +57,9 @@ public class NoteDeFrais {
 		super();
 	}
 
-	public NoteDeFrais(LigneDeFrais ligneDeFrais, LocalDateTime dateCreation, LocalDateTime dateValidation,
+	public NoteDeFrais(LocalDateTime dateCreation, LocalDateTime dateValidation,
 			Boolean estValidee, Boolean estRejectee, Mission mission) {
 		super();
-		this.ligneDeFrais = ligneDeFrais;
 		this.dateCreation = dateCreation;
 		this.dateValidation = dateValidation;
 		this.estValidee = estValidee;
@@ -84,21 +80,6 @@ public class NoteDeFrais {
 	 */
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	/**
-	 * @return the ligneDeFrais
-	 */
-	public LigneDeFrais getLigneDeFrais() {
-		return ligneDeFrais;
-	}
-
-	/**
-	 * @param ligneDeFrais
-	 *            the ligneDeFrais to set
-	 */
-	public void setLigneDeFrais(LigneDeFrais ligneDeFrais) {
-		this.ligneDeFrais = ligneDeFrais;
 	}
 
 	/**
