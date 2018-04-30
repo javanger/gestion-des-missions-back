@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import dev.model.Status;
@@ -53,6 +54,13 @@ public class Mission {
 	/** prime : Float */
 	@Column(name = "PRIME", length = 6)
 	private BigDecimal prime;
+
+	/**
+	 * collaborateur: Collaborateur
+	 */
+	@ManyToOne
+	@JoinColumn(name = "ID_COLLABORATEUR")
+	private Collaborateur collaborateur;
 
 	public Mission() {
 		super();
