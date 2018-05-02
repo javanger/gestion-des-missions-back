@@ -3,6 +3,7 @@ package dev.controller;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -16,14 +17,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.entity.Collaborateur;
 import dev.entity.LigneDeFrais;
 import dev.entity.Mission;
 import dev.entity.Nature;
 import dev.entity.NoteDeFrais;
 import dev.model.NoteItemFlat;
+import dev.model.Role;
 import dev.model.Status;
 import dev.model.Transport;
 import dev.model.VeryLigthMission;
+import dev.repository.CollaborateurRepository;
 import dev.repository.LigneDeFraisRepository;
 import dev.repository.MissionRepository;
 import dev.repository.NatureRepository;
@@ -43,22 +47,52 @@ public class NoteDeFraisController {
 	private NatureRepository natureRepo;
 	@Autowired
 	private LigneDeFraisRepository ligneDeFraisRepo;
+	@Autowired
+	private CollaborateurRepository collaborateurRepo;
 
 	@EventListener(ContextRefreshedEvent.class)
 	public void onStart() {
 		// pour les tests
-		this.missionRepo.save(
-				new Mission(LocalDate.now(), LocalDate.now(), natureRepo.save(new Nature("Negos", false, true, 40, 50)),
-						"Paris", "Nantes", Transport.VOITURE_DE_SERVICE, Status.INITIALE));
-		this.missionRepo.save(new Mission(LocalDate.now(), LocalDate.now(),
+		
+		Collaborateur collaborateur = new Collaborateur("123456", Role.EMPLOYE);
+		
+		collaborateurRepo.save(collaborateur);
+		
+		Optional<Collaborateur> cOptional = collaborateurRepo.findByMatricule("123456");		
+				
+		collaborateur = cOptional.get();
+		
+		Mission mission = new Mission(LocalDate.of(1000, 1, 1), LocalDate.of(2000, 1, 1), natureRepo.save(new Nature("Negos", false, true, 40, 50)),
+				"Paris", "Nantes", Transport.VOITURE_DE_SERVICE, Status.INITIALE);
+		
+		mission.setCollaborateur(cOptional.get());
+		
+		this.missionRepo.save(mission);
+				
+		mission = new Mission(LocalDate.now(), LocalDate.now(),
 				natureRepo.save(new Nature("Expertise", false, true, 5, 4)), "Paris", "Orlean", Transport.TRAIN,
-				Status.INITIALE));
-		this.missionRepo.save(new Mission(LocalDate.now(), LocalDate.now(),
+				Status.INITIALE);
+		
+		mission.setCollaborateur(collaborateur);
+		
+		this.missionRepo.save(mission);
+		
+		mission = new Mission(LocalDate.now(), LocalDate.now(),
 				natureRepo.save(new Nature("Formation", false, false, 0, 0)), "Lyon", "Paris", Transport.TRAIN,
-				Status.INITIALE));
-		this.missionRepo.save(new Mission(LocalDate.now(), LocalDate.now(),
+				Status.INITIALE);
+		
+		mission.setCollaborateur(collaborateur);
+		
+		this.missionRepo.save(mission);
+		
+		mission = new Mission(LocalDate.now(), LocalDate.now(),
 				natureRepo.save(new Nature("Expertise", false, true, 6, 6)), "Paris", "Tokyo", Transport.AVION,
-				Status.INITIALE));
+				Status.INITIALE);
+		
+		mission.setCollaborateur(collaborateur);
+		
+		this.missionRepo.save(mission);
+		
 	}
 
 	@GetMapping()
