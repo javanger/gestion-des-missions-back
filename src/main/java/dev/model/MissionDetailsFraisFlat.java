@@ -1,5 +1,9 @@
 package dev.model;
 
+import java.time.LocalDate;
+
+import dev.utils.Date;
+
 public class MissionDetailsFraisFlat {
 
 	/** dateDebut : String */
@@ -23,6 +27,9 @@ public class MissionDetailsFraisFlat {
 	/** transport : String */
 	private String transport;
 	
+	/** estEchue : boolean */
+	private boolean estEchue;
+	
 	/** Constructeur */
 	public MissionDetailsFraisFlat() {
 		super();
@@ -39,6 +46,7 @@ public class MissionDetailsFraisFlat {
 		this.villeDepart = villeDepart;
 		this.villeArrivee = villeArrivee;
 		this.transport = transport;
+		estEchue = Date.stringToDate(dateFin).isBefore(LocalDate.now());
 	}
 
 	/** Getter
@@ -90,6 +98,13 @@ public class MissionDetailsFraisFlat {
 		return transport;
 	}
 
+	/** Getter
+	 * @return the estEchue
+	 */
+	public boolean isEstEchue() {
+		return estEchue;
+	}
+
 	/** Setter
 	 * @param dateDebut the dateDebut to set
 	 */
@@ -138,6 +153,13 @@ public class MissionDetailsFraisFlat {
 	public void setTransport(String transport) {
 		this.transport = transport;
 	}
-	
+
+	/** Setter
+	 * @param estEchue the estEchue to set
+	 */
+	public void setEstEchue(boolean estEchue) {
+		this.estEchue = estEchue;
+	}
+
 	
 }
