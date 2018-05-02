@@ -50,14 +50,14 @@ public class NatureController {
 		Nature nature = new Nature();
 
 		// Vérification de la date
-		if (ValidateDate.validateInputDate(null)) {
+		if (ValidateDate.validateInputDate(newNature.getDateFin())) {
 			nature.setDateFin(LocalDate.parse(newNature.getDateFin()));
 		} else {
 			nature.setDateFin(LocalDate.MAX);
 		}
 
 		// Vérification de la prime
-		if (newNature.isaUnePrime() && newNature.getPourcentagePrime() == null) {
+		if (newNature.isaUnePrime() && newNature.getPourcentagePrime() == null || !newNature.isaUnePrime()) {
 			nature.setaUnePrime(false);
 		} else {
 			nature.setaUnePrime(true);
@@ -65,7 +65,7 @@ public class NatureController {
 		}
 
 		// Vérification de la facturation
-		if (newNature.isEstFacturee() && newNature.getTjm() == null) {
+		if (newNature.isEstFacturee() && newNature.getTjm() == null || !newNature.isEstFacturee()) {
 			nature.setEstFacturee(false);
 		} else {
 			nature.setEstFacturee(true);
@@ -79,7 +79,6 @@ public class NatureController {
 			nature.setLibelle(newNature.getLibelle());
 
 			natureRepository.save(nature);
-
 			return ResponseEntity.ok(nature);
 
 		} else {
