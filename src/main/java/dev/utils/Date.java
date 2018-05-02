@@ -29,5 +29,14 @@ public class Date {
 	public static String shortDateFormat(LocalDate date) {
 		return date.format(DateTimeFormatter.ofPattern("dd/MM/YYYY"));
 	}
+	
+	
+	/**
+	 * @param String date
+	 * @return LocalDate au format jour/mois/année
+	 */
+	public static LocalDate stringToDate(String date) {
+		return LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	}
 
 }
