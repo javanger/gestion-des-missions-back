@@ -6,6 +6,8 @@ import dev.utils.Date;
 
 public class MissionDetailsFraisFlat {
 
+	private String id;
+	
 	/** dateDebut : String */
 	private String dateDebut;
 	
@@ -36,9 +38,10 @@ public class MissionDetailsFraisFlat {
 	}
 
 	/** Constructeur */
-	public MissionDetailsFraisFlat(String dateDebut, String dateFin, String nature, String estimationPrime,
+	public MissionDetailsFraisFlat(String id, String dateDebut, String dateFin, String nature, String estimationPrime,
 			String villeDepart, String villeArrivee, String transport) {
 		super();
+		this.id = id;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.nature = nature;
@@ -47,6 +50,13 @@ public class MissionDetailsFraisFlat {
 		this.villeArrivee = villeArrivee;
 		this.transport = transport;
 		estEchue = Date.stringToDate(dateFin).isBefore(LocalDate.now());
+	}
+
+	/** Getter
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
 	}
 
 	/** Getter
@@ -103,6 +113,13 @@ public class MissionDetailsFraisFlat {
 	 */
 	public boolean isEstEchue() {
 		return estEchue;
+	}
+
+	/** Setter
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	/** Setter

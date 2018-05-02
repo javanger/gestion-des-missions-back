@@ -2,6 +2,7 @@ package dev.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,12 +30,44 @@ public class MissionController {
 	public List<Mission> searchAll() {
 		return this.missionRepo.findAll();
 	}
+	
+	/**
+	 * @param id de la mission
+	 * @return la mission
+	 */
+	@GetMapping("/{id}")
+	public ResponseEntity<?> searchById(@PathVariable Integer id) {
+		
+		Optional<Mission> missionOptionnal = missionRepo.findById(id);
+		
+		if(missionOptionnal.isPresent()) {			
+			
+			Mission mission = missionOptionnal.get();
+			
+			String idMission = mission.getId().toString();
+			String dateDebut = Date.shortDateFormat(mission.getDateDebut());
+			String dateFin = Date.shortDateFormat(mission.getDateFin());
+			String nature = mission.getNature().getLibelle();
+			String villeDepart = mission.getVilleDepart();
+			String villeArrivee = mission.getVilleArrivee();
+			String transport = mission.getTransport().toString();
+			String prime = "1000";
+			
+			MissionDetailsFraisFlat missionDetailsFraisFlat = new MissionDetailsFraisFlat(idMission, dateDebut, dateFin,
+					nature, prime, villeDepart, villeArrivee, transport);
+			
+			return ResponseEntity.ok(missionDetailsFraisFlat);			
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Mission inconnue");
+		}
+	}
+	
 
 	/**
-	 * @param matricule
-	 * @return la list des missions en fonction du matricule
+	 * @param matricule du collaborateur
+	 * @return la liste des missions en fonction du matricule
 	 */
-	@GetMapping("/{matricule}")
+	@GetMapping("/collaborateur/{matricule}")
 	public ResponseEntity<?> findMissionsByCollaborateurMatricule(@PathVariable String matricule) {
 
 		List<Mission> missions = missionRepo.findByCollaborateurMatricule(matricule);
@@ -45,6 +78,7 @@ public class MissionController {
 
 			for (Mission mission : missions) {
 
+				String id = mission.getId().toString();
 				String dateDebut = Date.shortDateFormat(mission.getDateDebut());
 				String dateFin = Date.shortDateFormat(mission.getDateFin());
 				String nature = mission.getNature().getLibelle();
@@ -53,7 +87,7 @@ public class MissionController {
 				String transport = mission.getTransport().toString();
 				String prime = "1000";
 
-				MissionDetailsFraisFlat missionDetailsFraisFlat = new MissionDetailsFraisFlat(dateDebut, dateFin,
+				MissionDetailsFraisFlat missionDetailsFraisFlat = new MissionDetailsFraisFlat(id, dateDebut, dateFin,
 						nature, prime, villeDepart, villeArrivee, transport);
 
 				missionsDetailsFraisFlats.add(missionDetailsFraisFlat);
