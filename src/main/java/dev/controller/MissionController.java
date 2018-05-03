@@ -1,5 +1,6 @@
 package dev.controller;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.entity.Mission;
 import dev.model.MissionDetailsFraisFlat;
 import dev.repository.MissionRepository;
-import dev.utils.Date;
 
 @RestController
 @CrossOrigin
@@ -30,41 +30,42 @@ public class MissionController {
 	public List<Mission> searchAll() {
 		return this.missionRepo.findAll();
 	}
-	
+
 	/**
-	 * @param id de la mission
+	 * @param id
+	 *            de la mission
 	 * @return la mission
 	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<?> searchById(@PathVariable Integer id) {
-		
+
 		Optional<Mission> missionOptionnal = missionRepo.findById(id);
-		
-		if(missionOptionnal.isPresent()) {			
-			
+
+		if (missionOptionnal.isPresent()) {
+
 			Mission mission = missionOptionnal.get();
-			
+
 			String idMission = mission.getId().toString();
-			String dateDebut = Date.shortDateFormat(mission.getDateDebut());
-			String dateFin = Date.shortDateFormat(mission.getDateFin());
+			String dateDebut = mission.getDateDebut().format(DateTimeFormatter.ISO_DATE);
+			String dateFin = mission.getDateFin().format(DateTimeFormatter.ISO_DATE);
 			String nature = mission.getNature().getLibelle();
 			String villeDepart = mission.getVilleDepart();
 			String villeArrivee = mission.getVilleArrivee();
 			String transport = mission.getTransport().toString();
 			String prime = "1000";
-			
+
 			MissionDetailsFraisFlat missionDetailsFraisFlat = new MissionDetailsFraisFlat(idMission, dateDebut, dateFin,
 					nature, prime, villeDepart, villeArrivee, transport);
-			
-			return ResponseEntity.ok(missionDetailsFraisFlat);			
+
+			return ResponseEntity.ok(missionDetailsFraisFlat);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Mission inconnue");
 		}
 	}
-	
 
 	/**
-	 * @param matricule du collaborateur
+	 * @param matricule
+	 *            du collaborateur
 	 * @return la liste des missions en fonction du matricule
 	 */
 	@GetMapping("/collaborateur/{matricule}")
@@ -79,8 +80,8 @@ public class MissionController {
 			for (Mission mission : missions) {
 
 				String id = mission.getId().toString();
-				String dateDebut = Date.shortDateFormat(mission.getDateDebut());
-				String dateFin = Date.shortDateFormat(mission.getDateFin());
+				String dateDebut = mission.getDateDebut().format(DateTimeFormatter.ISO_DATE);
+				String dateFin = mission.getDateFin().format(DateTimeFormatter.ISO_DATE);
 				String nature = mission.getNature().getLibelle();
 				String villeDepart = mission.getVilleDepart();
 				String villeArrivee = mission.getVilleArrivee();
@@ -92,7 +93,6 @@ public class MissionController {
 
 				missionsDetailsFraisFlats.add(missionDetailsFraisFlat);
 			}
-
 			return ResponseEntity.ok(missionsDetailsFraisFlats);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Matricule inconnu");

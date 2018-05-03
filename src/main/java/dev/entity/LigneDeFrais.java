@@ -53,11 +53,12 @@ public class LigneDeFrais {
 	}
 
 	/** constructor */
-	public LigneDeFrais(LocalDate date, String nature, BigDecimal montant) {
+	public LigneDeFrais(String nature, LocalDate date , BigDecimal montant, NoteDeFrais noteDeFrais) {
 		super();
 		this.date = date;
 		this.nature = nature;
 		this.montant = montant;
+		this.noteDeFrais = noteDeFrais;
 	}
 
 	/**

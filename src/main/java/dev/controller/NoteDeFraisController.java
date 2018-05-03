@@ -1,9 +1,12 @@
 package dev.controller;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -22,11 +25,11 @@ import dev.entity.LigneDeFrais;
 import dev.entity.Mission;
 import dev.entity.Nature;
 import dev.entity.NoteDeFrais;
-import dev.model.NoteItemFlat;
+import dev.model.LigneDeFraisFlat;
+import dev.model.NoteDeFraisFlat;
 import dev.model.Role;
 import dev.model.Status;
 import dev.model.Transport;
-import dev.model.VeryLigthMission;
 import dev.repository.CollaborateurRepository;
 import dev.repository.LigneDeFraisRepository;
 import dev.repository.MissionRepository;
@@ -53,106 +56,160 @@ public class NoteDeFraisController {
 	@EventListener(ContextRefreshedEvent.class)
 	public void onStart() {
 		// pour les tests
-		
 		Collaborateur collaborateur = new Collaborateur("123456", Role.EMPLOYE);
-		
 		collaborateurRepo.save(collaborateur);
-		
-		Optional<Collaborateur> cOptional = collaborateurRepo.findByMatricule("123456");		
-				
+		Optional<Collaborateur> cOptional = collaborateurRepo.findByMatricule("123456");
 		collaborateur = cOptional.get();
-		
-		Mission mission = new Mission(LocalDate.of(1000, 1, 1), LocalDate.of(2000, 1, 1), natureRepo.save(new Nature("Negos", false, true, 40, 50)),
-				"Paris", "Nantes", Transport.VOITURE_DE_SERVICE, Status.INITIALE);
-		
+
+		// new mission
+		Mission mission = new Mission(LocalDate.of(2018, 1, 1), LocalDate.of(2018, 3, 5),
+				natureRepo.save(new Nature("Negos", false, true, 40, 50)), "Paris", "Nantes",
+				Transport.VOITURE_DE_SERVICE, Status.INITIALE);
 		mission.setCollaborateur(cOptional.get());
-		
-		this.missionRepo.save(mission);
-				
-		mission = new Mission(LocalDate.now(), LocalDate.now(),
+		Mission newMission = this.missionRepo.save(mission);
+		// new note de frais
+		NoteDeFrais note = new NoteDeFrais(newMission);
+		note = this.noteDeFraisRepo.save(note);
+		// ligne de frais
+		LigneDeFrais[] frais = { new LigneDeFrais("Hôtel", Date.stringToDate("22/05/2017"), new BigDecimal("75"), note),
+				new LigneDeFrais("Hôtel", Date.stringToDate("23/05/2017"), new BigDecimal("75"), note),
+				new LigneDeFrais("Petit-déjeuner", Date.stringToDate("23/05/2017"), new BigDecimal("9"), note),
+				new LigneDeFrais("Restaurant", Date.stringToDate("23/05/2017"), new BigDecimal("12.5"), note),
+				new LigneDeFrais("Restaurant", Date.stringToDate("23/05/2017"), new BigDecimal("12.5"), note),
+				new LigneDeFrais("Hôtel", Date.stringToDate("24/05/2017"), new BigDecimal("75"), note) };
+
+		Arrays.stream(frais).forEach(item -> ligneDeFraisRepo.save(item));
+
+		// autre mission
+		mission = new Mission(LocalDate.of(2018, 1, 1), LocalDate.of(2018, 6, 30),
 				natureRepo.save(new Nature("Expertise", false, true, 5, 4)), "Paris", "Orlean", Transport.TRAIN,
 				Status.INITIALE);
-		
 		mission.setCollaborateur(collaborateur);
-		
+
 		this.missionRepo.save(mission);
-		
-		mission = new Mission(LocalDate.now(), LocalDate.now(),
+
+		// autre mission
+		mission = new Mission(LocalDate.of(2018, 9, 1), LocalDate.of(2018, 10, 30),
 				natureRepo.save(new Nature("Formation", false, false, 0, 0)), "Lyon", "Paris", Transport.TRAIN,
 				Status.INITIALE);
-		
 		mission.setCollaborateur(collaborateur);
-		
 		this.missionRepo.save(mission);
-		
-		mission = new Mission(LocalDate.now(), LocalDate.now(),
+
+		// autre mission
+		mission = new Mission(LocalDate.of(2018, 1, 1), LocalDate.now().minusDays(1),
 				natureRepo.save(new Nature("Expertise", false, true, 6, 6)), "Paris", "Tokyo", Transport.AVION,
 				Status.INITIALE);
-		
 		mission.setCollaborateur(collaborateur);
-		
 		this.missionRepo.save(mission);
-		
+
 	}
 
+	/**
+	 * Retourne toutes les notes de frais
+	 * 
+	 * @return List<NoteDeFrais>
+	 */
 	@GetMapping()
 	public List<NoteDeFrais> searchAll() {
 		return this.noteDeFraisRepo.findAll();
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<?> findById(@PathVariable Integer id) {
-
-		NoteDeFrais noteEntity = noteDeFraisRepo.getOne(id);
-		List<LigneDeFrais> noteItemsEntities = ligneDeFraisRepo.findByNoteDeFrais(id);
-		Mission missionRefenrence = missionRepo.getOne(noteEntity.getMission().getId());
-
-		// generer l'objet retouné
-		String dateDebut = Date.shortDateFormat(missionRefenrence.getDateDebut());
-		String dateFin = Date.shortDateFormat(missionRefenrence.getDateFin());
-		String estimationPrime = "0";
-		String nature = missionRefenrence.getNature().getLibelle();
-		String villeDepart = missionRefenrence.getVilleDepart();
-		String villeArrivee = missionRefenrence.getVilleArrivee();
-		// NoteDeFraisFlat flatNote = new NoteDeFraisFlat(dateDebut, dateFin,
-		// estimationPrime, nature, villeDepart,
-		// villeArrivee, noteItemsEntities);
-
-		// return ResponseEntity.ok(flatNote);
-		return null;
-	}
-
+	/**
+	 * Retourne la liste des natures (type) de frais != nature de mission
+	 * 
+	 * @return string[]
+	 */
 	@GetMapping("/frais/natures")
 	public String[] listerNatures() {
 		return new String[] { "Hôtel", "Petit-Déjeuner", "Restaurant" };
 	}
 
 	/**
-	 * @param missionId
-	 * @return l'ojet NoteDeFrais créer
+	 * Retourne la ligne de frais en fonction de l'id du frais
+	 * 
+	 * @return ResponseEntity<?>
 	 */
-	@PostMapping()
-	public ResponseEntity<?> create(@RequestBody VeryLigthMission mission) {
-		// récupérer la mission
-		Mission existingMission = missionRepo.findOne(mission.getId());
-
-		// creer la note de frais
-		NoteDeFrais note = new NoteDeFrais(LocalDateTime.now(), null, false, false, existingMission);
-
-		return ResponseEntity.ok(noteDeFraisRepo.save(note));
+	@GetMapping("/frais/{id}")
+	public ResponseEntity<?> lireUnFrais(@PathVariable Integer id) {
+		if (id > 0) {
+			LigneDeFrais frais = this.ligneDeFraisRepo.findOne(id);
+			if (frais != null) {
+				LigneDeFraisFlat fraisFlat = new LigneDeFraisFlat(Integer.toString(frais.getId()),
+						frais.getDate().format(DateTimeFormatter.ISO_DATE), frais.getNature(),
+						frais.getMontant().toString());
+				return ResponseEntity.ok(fraisFlat);
+			}
+		}
+		return ResponseEntity.status(404).body("Aucun frais trouvé pour l'id: " + id);
 	}
 
+	/**
+	 * Retourne une note de frais en fonction de l'id de la mission son id
+	 * 
+	 * @param id
+	 * @return {@link ResponseEntity<?>} |
+	 */
+	@GetMapping("/mission/{id}")
+	public ResponseEntity<?> findNoteFraisById(@PathVariable Integer id) {
+		// récupérer la note de frais via l'id de mission
+		Optional<NoteDeFrais> noteOpt = noteDeFraisRepo.findByMissionId(id);
+		if (noteOpt.isPresent()) {
+			List<LigneDeFrais> noteItemsEntities = ligneDeFraisRepo.findByNoteDeFrais(noteOpt.get());
+
+			// generer l'objet flat retouné
+			List<LigneDeFraisFlat> items = noteItemsEntities.stream()
+					.map(n -> new LigneDeFraisFlat(Integer.toString(n.getId()),
+							n.getDate().format(DateTimeFormatter.ISO_DATE), n.getNature(), n.getMontant().toString()))
+					.collect(Collectors.toList());
+			return ResponseEntity.ok(new NoteDeFraisFlat(id, items));
+		} else {
+			return ResponseEntity.status(404).body("Pas de note de frais trouvé pour la mission : " + id);
+		}
+	}
+
+	/**
+	 * Retourne la note de frais et ses frais en fonction de l'id d'une note
+	 * 
+	 * @return ResponseEntity<?>
+	 */
 	/*
-	 * Ajouter la ligne de frais en fonction de la mission
-	 * @param idMission
+	 * @GetMapping("/{id}/frais") public ResponseEntity<?>
+	 * lireNoteDeFrais(@PathVariable Integer id) { if (id > 0) { NoteDeFrais note =
+	 * this.noteDeFraisRepo.findOne(id); if (note != null) { // récupérer les frais
+	 * de la notes List<LigneDeFrais> listFrais =
+	 * this.ligneDeFraisRepo.findByNoteDeFrais(note); if (!listFrais.isEmpty()) {
+	 * List<LigneDeFraisFlat> items = listFrais.stream() .map(f -> new
+	 * LigneDeFraisFlat(Integer.toString(f.getId()), f.getNature(),
+	 * Date.shortDateFormat(f.getDate()), f.getMontant().toString()))
+	 * .collect(Collectors.toList()); return ResponseEntity.ok(new
+	 * NoteDeFraisFlat(id, items)); } } } return ResponseEntity.status(404).
+	 * body("Aucun frais trouvé pour la note de frais id = " + id); }
+	 */
+
+	/**
+	 * Ajouter la ligne de frais à une note de frais
+	 * 
+	 * @param id
+	 *            Interger : id de la note de frais
 	 * @return l'element ajouter ou le message d'erreur
 	 */
-	@PostMapping("/frais/{idMission}")
-	public ResponseEntity<?> creerLigneDeFrais(@PathVariable Integer idMission) {
-		// récupérer la mission
-		// ajouter la ligne de frais
-		NoteItemFlat fraisFlat = new NoteItemFlat("date", "nature", "montant");
-		return ResponseEntity.ok(fraisFlat);
+	@PostMapping("/{id}/frais")
+	public ResponseEntity<?> creerLigneDeFrais(@PathVariable Integer id, @RequestBody LigneDeFraisFlat fraisFlat) {
+		// récupérer la note de frais
+		if (id > 0) {
+			NoteDeFrais note = noteDeFraisRepo.findOne(id);
+			if (note != null) {
+				// parser le model en entité
+				LigneDeFrais frais = new LigneDeFrais(fraisFlat.getNature(),
+						LocalDate.parse(fraisFlat.getDate(), DateTimeFormatter.ISO_DATE),
+						new BigDecimal(fraisFlat.getMontant()), note);
+				// parser l'entité en model
+				frais = this.ligneDeFraisRepo.save(frais);
+				LigneDeFraisFlat newFrais = new LigneDeFraisFlat(Integer.toString(frais.getId()), frais.getNature(),
+						frais.getDate().format(DateTimeFormatter.ISO_DATE), frais.getMontant().toString());
+				return ResponseEntity.ok(newFrais);
+			}
+		}
+		return ResponseEntity.status(404).body("Pas de note de frais trouvé pour la mission : " + id);
 	}
-
 }

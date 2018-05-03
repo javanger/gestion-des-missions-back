@@ -33,10 +33,17 @@ public class Date {
 	
 	/**
 	 * @param String date
-	 * @return LocalDate au format jour/mois/année
+	 * @return LocalDate
 	 */
 	public static LocalDate stringToDate(String date) {
 		return LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 	}
 
+	/**
+	 * @param String date
+	 * @return LocalDateTime
+	 */
+	public static LocalDateTime stringToDateTime(String date) {
+		return LocalDateTime.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	}
 }

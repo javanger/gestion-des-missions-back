@@ -7,7 +7,20 @@ package dev.model;
  * @author ETY0006
  *
  */
-public class NoteItemFlat {
+public class LigneDeFraisFlat {
+
+	/**
+	 * id: String
+	 */
+	private String id;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	/**
 	 * date: String
@@ -22,14 +35,24 @@ public class NoteItemFlat {
 	 */
 	private String montant;
 
-	/** constructor */
-	public NoteItemFlat() {
+	/**
+	 * constructor
+	 */
+	public LigneDeFraisFlat() {
 		super();
 	}
 
-	/** constructor */
-	public NoteItemFlat(String date, String nature, String montant) {
+	/**
+	 * constructor
+	 * 
+	 * @param id
+	 * @param date
+	 * @param nature
+	 * @param montant
+	 */
+	public LigneDeFraisFlat(String id, String date, String nature, String montant) {
 		super();
+		this.id = id;
 		this.date = date;
 		this.nature = nature;
 		this.montant = montant;
