@@ -9,7 +9,7 @@ import dev.entity.Nature;
 
 public interface NatureRepository extends JpaRepository<Nature, Integer> {
 
-	Optional<Nature> findByLibelle(String libelle);
+	Optional<Nature> findById(Integer id);
 	
 	Boolean existsByLibelle(String libelle);
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,26 +25,38 @@ import dev.utils.ValidateDate;
 @RequestMapping("/api/natures")
 public class NatureController {
 
+	/** natureRepository : NatureRepository */
 	@Autowired
 	private NatureRepository natureRepository;
 
+	/**
+	 * @return Liste de toutes les natures
+	 */
 	@GetMapping
-	public ResponseEntity<?> searchAll() {
+	public ResponseEntity<?> searchJAll() {
 		return ResponseEntity.ok(this.natureRepository.findAll());
 	}
 
-	@GetMapping("/{libelle}")
-	public ResponseEntity<?> search(@PathVariable String libelle) {
+	/**
+	 * @param id de la nature
+	 * @return La nature correspondante
+	 */
+	@GetMapping("/{id}")
+	public ResponseEntity<?> search(@PathVariable Integer id) {
 
-		Optional<Nature> nature = natureRepository.findByLibelle(libelle);
+		Optional<Nature> nature = natureRepository.findById(id);
 
 		if (nature.isPresent()) {
 			return ResponseEntity.ok(nature.get());
 		} else {
-			return ResponseEntity.badRequest().body("Aucune nature trouvée pour le libellé " + libelle);
+			return ResponseEntity.badRequest().body("Aucune nature trouvée pour l'id " + id);
 		}
 	}
 
+	/**
+	 * @param newNature l'objet Nature à créer
+	 * @return La nature crée ou un message de conflit
+	 */
 	@PostMapping
 	public ResponseEntity<?> createNature(@RequestBody NewNature newNature) {
 
@@ -83,6 +96,25 @@ public class NatureController {
 
 		} else {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Nature déjà existante");
+		}
+	}
+	
+	/**
+	 * @param id de la nature à supprimer
+	 * @return Message de suppression ou d'erreur si nature non trouvée
+	 */
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> deleteNature(@PathVariable Integer id) {
+		
+		Optional<Nature> optionalNature = natureRepository.findById(id);
+		
+		if(optionalNature.isPresent()) {
+			
+			natureRepository.delete(optionalNature.get());
+			
+			return ResponseEntity.accepted().body("Nature " + id + " supprimée");
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nature non trouvé");
 		}
 	}
 
