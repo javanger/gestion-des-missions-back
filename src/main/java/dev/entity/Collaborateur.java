@@ -35,6 +35,9 @@ public class Collaborateur {
 	/** motDePasse : String */
 	@Column(name = "MOT_DE_PASSE", nullable = false)
 	private String motDePasse;
+	/** estActif : Boolean */
+	@Column(name = "EST_ACTIF")
+	private Boolean estActif;
 	/** role : String */
 	@Column(name = "ROLE", nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -59,6 +62,7 @@ public class Collaborateur {
 		super();
 		this.matricule = matricule;
 		this.motDePasse = motDePasse;
+		this.estActif = true;
 		this.role = role;
 	}
 
@@ -107,6 +111,25 @@ public class Collaborateur {
 	 */
 	public void setMotDePasse(String motDePasse) {
 		this.motDePasse = motDePasse;
+	}
+
+	/**
+	 * Getter
+	 * 
+	 * @return the estActif
+	 */
+	public Boolean getEstActif() {
+		return estActif;
+	}
+
+	/**
+	 * Setter
+	 * 
+	 * @param estActif
+	 *            the estActif to set
+	 */
+	public void setEstActif(Boolean estActif) {
+		this.estActif = estActif;
 	}
 
 	/**
