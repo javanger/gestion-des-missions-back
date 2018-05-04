@@ -1,69 +1,45 @@
-package dev.entity;
+package dev.model;
 
-import java.time.LocalDate;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Entity
-public class Nature {
-
-	/** id : Integer */
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+public class NewNature {
 
 	/** libelle : String */
-	@Column(name = "LIBELLE", length = 30)
 	private String libelle;
 	
 	/** estFacturee : boolean */
-	@Column(name = "EST_FACTUREE")
 	private boolean estFacturee;
 	
 	/** aUnePrime : boolean */
-	@Column(name = "A_UNE_PRIME")
 	private boolean aUnePrime;
 	
 	/** tjm : Integer */
-	@Column(name = "TJM")
-	private Integer tjm;
+	private String tjm;
 	
 	/** pourcentagePrime : Integer */
-	@Column(name = "POURCENTAGE_PRIME")
-	private Integer pourcentagePrime;
+	private String pourcentagePrime;
 	
-	@Column(name = "DATE_FIN")
-	private LocalDate dateFin;
+	private String dateFin;
 	
-	public Nature() {
+	public NewNature() {
 		super();
 	}
 
 	/** Constructor
-	 * @param libelle Libelle de la prime
-	 * @param estFacturee Possède une facturation ou non
-	 * @param aUnePrime Possède une prime ou non
-	 * @param tjm Taux journalier si facturation
-	 * @param pourcentagePrime Pourcentage de la prime
+	 * @param libelle
+	 * @param estFacturee
+	 * @param aUnePrime
+	 * @param tjm
+	 * @param pourcentagePrime
+	 * @param dateFin
 	 */
-	public Nature(String libelle, boolean estFacturee, boolean aUnePrime, Integer tjm, Integer pourcentagePrime) {
+	public NewNature(String libelle, boolean estFacturee, boolean aUnePrime, String tjm, String pourcentagePrime,
+			String dateFin) {
 		super();
 		this.libelle = libelle;
 		this.estFacturee = estFacturee;
 		this.aUnePrime = aUnePrime;
 		this.tjm = tjm;
 		this.pourcentagePrime = pourcentagePrime;
-	}
-
-	/** Getter
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
+		this.dateFin = dateFin;
 	}
 
 	/** Getter
@@ -90,29 +66,22 @@ public class Nature {
 	/** Getter
 	 * @return the tjm
 	 */
-	public Integer getTjm() {
+	public String getTjm() {
 		return tjm;
 	}
 
 	/** Getter
 	 * @return the pourcentagePrime
 	 */
-	public Integer getPourcentagePrime() {
+	public String getPourcentagePrime() {
 		return pourcentagePrime;
 	}
 
 	/** Getter
 	 * @return the dateFin
 	 */
-	public LocalDate getDateFin() {
+	public String getDateFin() {
 		return dateFin;
-	}
-
-	/** Setter
-	 * @param id the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	/** Setter
@@ -139,22 +108,22 @@ public class Nature {
 	/** Setter
 	 * @param tjm the tjm to set
 	 */
-	public void setTjm(Integer tjm) {
+	public void setTjm(String tjm) {
 		this.tjm = tjm;
 	}
 
 	/** Setter
 	 * @param pourcentagePrime the pourcentagePrime to set
 	 */
-	public void setPourcentagePrime(Integer pourcentagePrime) {
+	public void setPourcentagePrime(String pourcentagePrime) {
 		this.pourcentagePrime = pourcentagePrime;
 	}
 
 	/** Setter
 	 * @param dateFin the dateFin to set
 	 */
-	public void setDateFin(LocalDate dateFin) {
+	public void setDateFin(String dateFin) {
 		this.dateFin = dateFin;
 	}
-
+	
 }
