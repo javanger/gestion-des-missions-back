@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  * @author Alexis Darcy
@@ -31,7 +31,7 @@ public class NoteDeFrais {
 	/**
 	 * dateValidation: LocalDateTime
 	 */
-	@Column(name = "DATE_VALIDATION")
+	@Column(name = "DATE_VALIDATION", nullable=true)
 	LocalDateTime dateValidation;
 	/**
 	 * estValidee: Boolean
@@ -46,7 +46,7 @@ public class NoteDeFrais {
 	/**
 	 * mission: Mission
 	 */
-	@ManyToOne
+	@OneToOne
     @JoinColumn(name="ID_MISSION")
 	Mission mission;
 
@@ -57,10 +57,27 @@ public class NoteDeFrais {
 		super();
 	}
 
-	public NoteDeFrais(LocalDateTime dateCreation, LocalDateTime dateValidation,
+	public NoteDeFrais(Mission mission) {
+		super();
+		this.dateCreation = LocalDateTime.now();
+		this.dateValidation = null;
+		this.estValidee = false;
+		this.estRejectee = false;
+		this.mission = mission;
+	}
+	
+	/** 
+	* constructor 
+	* @param dateCreation
+	* @param dateValidation
+	* @param estValidee
+	* @param estRejectee
+	* @param mission
+	*/
+	public NoteDeFrais(LocalDateTime dateValidation,
 			Boolean estValidee, Boolean estRejectee, Mission mission) {
 		super();
-		this.dateCreation = dateCreation;
+		this.dateCreation = LocalDateTime.now();
 		this.dateValidation = dateValidation;
 		this.estValidee = estValidee;
 		this.estRejectee = estRejectee;

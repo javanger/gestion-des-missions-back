@@ -1,6 +1,3 @@
-/**
- * 
- */
 package dev.entity;
 
 import javax.persistence.Column;
@@ -16,10 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import dev.model.Role;
 
-/**
- * @author Alexis Darcy
- *
- */
 @Entity
 @Table(name = "COLLABORATEUR")
 public class Collaborateur {
@@ -62,6 +55,13 @@ public class Collaborateur {
 		super();
 		this.matricule = matricule;
 		this.motDePasse = motDePasse;
+		this.estActif = true;
+		this.role = role;
+	}
+  
+  public Collaborateur(String matricule, Role role) {
+		super();
+		this.matricule = matricule;
 		this.estActif = true;
 		this.role = role;
 	}

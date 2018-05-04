@@ -1,12 +1,5 @@
-/**
- * 
- */
 package dev.model;
 
-/**
- * @author Alexis Darcy
- *
- */
 public enum Role {
 	ROLE_ADMINISTRATEUR("Administrateur"), ROLE_MANAGER("Manager"), ROLE_EMPLOYE("Employe");
 	
