@@ -8,9 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import dev.entity.Mission;
 
 public interface MissionRepository extends JpaRepository<Mission, Integer> {
-	
-	List<Mission> findByCollaborateurMatricule(String matricule);
-	
-	Optional<Mission> findById(Integer id);
-	
+	List<Mission> findByCollaborateurMatricule(String matricule);	
 }
