@@ -3,7 +3,6 @@ package dev.controller;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,11 +38,9 @@ public class MissionController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> searchById(@PathVariable Integer id) {
 
-		Optional<Mission> missionOptionnal = missionRepo.findById(id);
+		Mission mission = missionRepo.getOne(id);
 
-		if (missionOptionnal.isPresent()) {
-
-			Mission mission = missionOptionnal.get();
+		if (mission != null) {
 
 			String idMission = mission.getId().toString();
 			String dateDebut = mission.getDateDebut().format(DateTimeFormatter.ISO_DATE);
