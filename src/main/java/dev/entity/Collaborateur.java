@@ -1,6 +1,3 @@
-/**
- * 
- */
 package dev.entity;
 
 import javax.persistence.Column;
@@ -12,10 +9,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-/**
- * @author Alexis Darcy
- *
- */
+import dev.model.Role;
+
 @Entity
 @Table(name = "COLLABORATEUR")
 public class Collaborateur {
@@ -30,7 +25,7 @@ public class Collaborateur {
 	private String matricule;
 	/** role : String */
 	@Column(name = "ROLE", nullable = false, unique = true)
-	private String role;
+	private Role role;
 
 	/**
 	 * Constructeur
@@ -46,7 +41,7 @@ public class Collaborateur {
 	 * @param matricule
 	 * @param role
 	 */
-	public Collaborateur(String matricule, String role) {
+	public Collaborateur(String matricule, Role role) {
 		super();
 		this.matricule = matricule;
 		this.role = role;
@@ -85,7 +80,7 @@ public class Collaborateur {
 	 * 
 	 * @return the role
 	 */
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
@@ -95,7 +90,7 @@ public class Collaborateur {
 	 * @param role
 	 *            the role to set
 	 */
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 
