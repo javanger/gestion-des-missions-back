@@ -220,8 +220,9 @@ public class NoteDeFraisController {
 						new BigDecimal(fraisFlat.getMontant()), note);
 				// parser l'entité en model
 				frais = this.ligneDeFraisRepo.save(frais);
-				LigneDeFraisFlat newFrais = new LigneDeFraisFlat(Integer.toString(frais.getId()), frais.getNature(),
-						frais.getDate().format(DateTimeFormatter.ISO_DATE), frais.getMontant().toString());
+				LigneDeFraisFlat newFrais = new LigneDeFraisFlat(Integer.toString(frais.getId()),
+						frais.getDate().format(DateTimeFormatter.ISO_DATE), frais.getNature(),
+						frais.getMontant().toString());
 				return ResponseEntity.ok(newFrais);
 			}
 		}
