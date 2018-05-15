@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<bean id="ligneDeFrais1" class="dev.entity.LigneDeFrais">
+		<property name="nature" value="Hôtel"></property>
+		<property name="montant" value="86"></property>
+		<property name="noteDeFrais">
+			<ref bean="noteDeFrais1" />
+		</property>
+	</bean>
+
+	<bean id="ligneDeFrais2" class="dev.entity.LigneDeFrais">
+		<property name="nature" value="Petit-déjeuner"></property>
+		<property name="montant" value="12"></property>
+		<property name="noteDeFrais">
+			<ref bean="noteDeFrais1" />
+		</property>
+	</bean>
+
+	<bean id="ligneDeFrais3" class="dev.entity.LigneDeFrais">
+		<property name="nature" value="Restaurant"></property>
+		<property name="montant" value="35"></property>
+		<property name="noteDeFrais">
+			<ref bean="noteDeFrais1" />
+		</property>
+	</bean>
+	
+	<bean id="ligneDeFrais4" class="dev.entity.LigneDeFrais">
+		<property name="nature" value="Hôtel"></property>
+		<property name="montant" value="150"></property>
+		<property name="noteDeFrais">
+			<ref bean="noteDeFrais2" />
+		</property>
+	</bean>
+
+	<bean id="ligneDeFrais5" class="dev.entity.LigneDeFrais">
+		<property name="nature" value="Petit-déjeuner"></property>
+		<property name="montant" value="18"></property>
+		<property name="noteDeFrais">
+			<ref bean="noteDeFrais2" />
+		</property>
+	</bean>
+
+	<bean id="ligneDeFrais6" class="dev.entity.LigneDeFrais">
+		<property name="nature" value="Restaurant"></property>
+		<property name="montant" value="56"></property>
+		<property name="noteDeFrais">
+			<ref bean="noteDeFrais2" />
+		</property>
+	</bean>
+
+	<bean id="ligneDeFrais7" class="dev.entity.LigneDeFrais">
+		<property name="nature" value="Hôtel"></property>
+		<property name="montant" value="30"></property>
+		<property name="noteDeFrais">
+			<ref bean="noteDeFrais3" />
+		</property>
+	</bean>
+
+	<bean id="ligneDeFrais9" class="dev.entity.LigneDeFrais">
+		<property name="nature" value="Restaurant"></property>
+		<property name="montant" value="220"></property>
+		<property name="noteDeFrais">
+			<ref bean="noteDeFrais3" />
+		</property>
+	</bean>
+
+
+</beans>

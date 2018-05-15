@@ -61,64 +61,75 @@ public class LigneDeFrais {
 		this.noteDeFrais = noteDeFrais;
 	}
 
-	/**
+	/** Getter
 	 * @return the id
 	 */
 	public Integer getId() {
 		return id;
 	}
 
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	/**
+	/** Getter
 	 * @return the date
 	 */
 	public LocalDate getDate() {
 		return date;
 	}
 
-	/**
-	 * @param date
-	 *            the date to set
-	 */
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
-	/**
+	/** Getter
 	 * @return the nature
 	 */
 	public String getNature() {
 		return nature;
 	}
 
-	/**
-	 * @param nature
-	 *            the nature to set
-	 */
-	public void setNature(String nature) {
-		this.nature = nature;
-	}
-
-	/**
+	/** Getter
 	 * @return the montant
 	 */
 	public BigDecimal getMontant() {
 		return montant;
 	}
 
-	/**
-	 * @param montant
-	 *            the montant to set
+	/** Getter
+	 * @return the noteDeFrais
+	 */
+	public NoteDeFrais getNoteDeFrais() {
+		return noteDeFrais;
+	}
+
+	/** Setter
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	/** Setter
+	 * @param date the date to set
+	 */
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	/** Setter
+	 * @param nature the nature to set
+	 */
+	public void setNature(String nature) {
+		this.nature = nature;
+	}
+
+	/** Setter
+	 * @param montant the montant to set
 	 */
 	public void setMontant(BigDecimal montant) {
 		this.montant = montant;
 	}
+
+	/** Setter
+	 * @param noteDeFrais the noteDeFrais to set
+	 */
+	public void setNoteDeFrais(NoteDeFrais noteDeFrais) {
+		this.noteDeFrais = noteDeFrais;
+	}
+
 
 }

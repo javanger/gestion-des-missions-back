@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<bean id="mission1" class="dev.entity.Mission">
+		<property name="villeDepart" value="Bordeaux"></property>
+		<property name="villeArrivee" value="Nantes"></property>
+		<property name="transport" value="VOITURE_DE_SERVICE"></property>
+		<property name="status" value="INITIALE"></property>
+		<property name="prime" value="0"></property>
+		<property name="collaborateur">
+			<ref bean="collaborateur3" />
+		</property>
+		<property name="nature">
+			<ref bean="nature1" />
+		</property>
+	</bean>
+
+	<bean id="mission2" class="dev.entity.Mission">
+		<property name="villeDepart" value="Tokyo"></property>
+		<property name="villeArrivee" value="Paris"></property>
+		<property name="transport" value="AVION"></property>
+		<property name="status" value="INITIALE"></property>
+		<property name="prime" value="100"></property>
+		<property name="collaborateur">
+			<ref bean="collaborateur3" />
+		</property>
+		<property name="nature">
+			<ref bean="nature2" />
+		</property>
+	</bean>
+	
+	<bean id="mission3" class="dev.entity.Mission">
+		<property name="villeDepart" value="Lyon"></property>
+		<property name="villeArrivee" value="Paris"></property>
+		<property name="transport" value="TRAIN"></property>
+		<property name="status" value="INITIALE"></property>
+		<property name="prime" value="100"></property>
+		<property name="collaborateur">
+			<ref bean="collaborateur4" />
+		</property>
+		<property name="nature">
+			<ref bean="nature3" />
+		</property>
+	</bean>
+
+
+</beans>

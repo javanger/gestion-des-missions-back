@@ -21,10 +21,10 @@ public class Collaborateur {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	/** matricule : String */
-	@Column(name = "MATRICULE", nullable = false, unique = true)
+	@Column(name = "MATRICULE", nullable = false)
 	private String matricule;
 	/** role : String */
-	@Column(name = "ROLE", nullable = false, unique = true)
+	@Column(name = "ROLE", nullable = false)
 	private Role role;
 
 	/**
