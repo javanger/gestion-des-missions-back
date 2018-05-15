@@ -38,10 +38,11 @@ public class CollaborateurService {
 		Optional<ApiCollaborateur> collaborateurTrouve = listApiCollaborateur.stream()
 				.filter((ApiCollaborateur col) -> col.getMatricule().equals(matricule)).findFirst();
 
-		Collaborateur collaborateur = collaborateurRepository.findByMatricule(matricule);
+		Optional<Collaborateur> collaborateur = collaborateurRepository.findByMatricule(matricule);
 
 		ViewCollaborateur viewCollaborateur = collaborateurTrouve
-				.map(c -> new ViewCollaborateur(c.getMatricule(), c.getPrenom(), c.getNom(), collaborateur.getRole()))
+				.map(c -> new ViewCollaborateur(c.getMatricule(), c.getPrenom(), c.getNom(),
+						collaborateur.get().getRole()))
 				.orElse(null);
 
 		return viewCollaborateur;

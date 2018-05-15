@@ -73,7 +73,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			} else {
 				message = "error";
 			}
-
 			String json = mapper
 					.writeValueAsString(message);
 			response.getWriter().write(json);
