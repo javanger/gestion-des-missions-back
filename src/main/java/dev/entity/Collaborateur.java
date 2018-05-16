@@ -2,6 +2,8 @@ package dev.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,8 +25,16 @@ public class Collaborateur {
 	/** matricule : String */
 	@Column(name = "MATRICULE", nullable = false)
 	private String matricule;
+	/** motDePasse : String */
+	@Column(name = "MOT_DE_PASSE", nullable = false)
+	private String motDePasse;
+	/** estActif : Boolean */
+	@Column(name = "EST_ACTIF")
+	private Boolean estActif;
 	/** role : String */
 	@Column(name = "ROLE", nullable = false)
+
+	@Enumerated(EnumType.STRING)
 	private Role role;
 
 	/**
@@ -39,11 +49,21 @@ public class Collaborateur {
 	 * Constructeur
 	 * 
 	 * @param matricule
+	 * @param motDePasse
 	 * @param role
 	 */
-	public Collaborateur(String matricule, Role role) {
+	public Collaborateur(String matricule, String motDePasse, Role role) {
 		super();
 		this.matricule = matricule;
+		this.motDePasse = motDePasse;
+		this.estActif = true;
+		this.role = role;
+	}
+  
+  public Collaborateur(String matricule, Role role) {
+		super();
+		this.matricule = matricule;
+		this.estActif = true;
 		this.role = role;
 	}
 
@@ -78,6 +98,44 @@ public class Collaborateur {
 	/**
 	 * Getter
 	 * 
+	 * @return the motDePasse
+	 */
+	public String getMotDePasse() {
+		return motDePasse;
+	}
+
+	/**
+	 * Setter
+	 * 
+	 * @param motDePasse
+	 *            the motDePasse to set
+	 */
+	public void setMotDePasse(String motDePasse) {
+		this.motDePasse = motDePasse;
+	}
+
+	/**
+	 * Getter
+	 * 
+	 * @return the estActif
+	 */
+	public Boolean getEstActif() {
+		return estActif;
+	}
+
+	/**
+	 * Setter
+	 * 
+	 * @param estActif
+	 *            the estActif to set
+	 */
+	public void setEstActif(Boolean estActif) {
+		this.estActif = estActif;
+	}
+
+	/**
+	 * Getter
+	 * 
 	 * @return the role
 	 */
 	public Role getRole() {
@@ -93,5 +151,4 @@ public class Collaborateur {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-
 }

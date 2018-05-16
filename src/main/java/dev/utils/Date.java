@@ -5,6 +5,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Date {
+	
+	private Date() {
+		
+	}
 
 	/**
 	 * @param dateTime

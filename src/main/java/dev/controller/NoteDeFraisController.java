@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.entity.LigneDeFrais;
+import dev.entity.Mission;
 import dev.entity.NoteDeFrais;
 import dev.model.LigneDeFraisFlat;
 import dev.model.NoteDeFraisFlat;
+
+import dev.repository.CollaborateurRepository;
 import dev.repository.LigneDeFraisRepository;
 import dev.repository.NoteDeFraisRepository;
 
@@ -29,11 +32,16 @@ import dev.repository.NoteDeFraisRepository;
 @RequestMapping("/api/notes")
 public class NoteDeFraisController {
 
+	private static final String KEY_MESSAGE_HEADER = "message";
 	@Autowired
 	private NoteDeFraisRepository noteDeFraisRepo;
 
 	@Autowired
 	private LigneDeFraisRepository ligneDeFraisRepo;
+
+	@Autowired
+	private CollaborateurRepository collaborateurRepo;
+
 
 	/**
 	 * Retourne toutes les notes de frais
@@ -58,10 +66,10 @@ public class NoteDeFraisController {
 	/**
 	 * Retourne la ligne de frais en fonction de l'id du frais
 	 * 
-	 * @return ResponseEntity<?>
+	 * @return ResponseEntity<LigneDeFraisFlat>
 	 */
 	@GetMapping("/frais/{id}")
-	public ResponseEntity<?> lireUnFrais(@PathVariable Integer id) {
+	public ResponseEntity<LigneDeFraisFlat> lireUnFrais(@PathVariable Integer id) {
 		if (id > 0) {
 			LigneDeFrais frais = this.ligneDeFraisRepo.findOne(id);
 			if (frais != null) {
@@ -71,17 +79,18 @@ public class NoteDeFraisController {
 				return ResponseEntity.ok(fraisFlat);
 			}
 		}
-		return ResponseEntity.status(404).body("Aucun frais trouvé pour l'id: " + id);
+		final String VALUE_MESSAGE_HEADER = "Aucun frais trouvé pour l'id: " + id;
+		return ResponseEntity.status(404).header(KEY_MESSAGE_HEADER, VALUE_MESSAGE_HEADER).body(null);
 	}
 
 	/**
-	 * Retourne une note de frais en fonction de l'id de la mission son id
+	 * Retourne une note de frais en fonction de l'id de la mission
 	 * 
 	 * @param id
-	 * @return {@link ResponseEntity<?>} |
+	 * @return {@link ResponseEntity<NoteDeFraisFlat>} |
 	 */
-	@GetMapping("/mission/{id}")
-	public ResponseEntity<?> findNoteFraisById(@PathVariable Integer id) {
+	@GetMapping("/missions/{id}")
+	public ResponseEntity<NoteDeFraisFlat> findNoteFraisById(@PathVariable Integer id) {
 		// récupérer la note de frais via l'id de mission
 		Optional<NoteDeFrais> noteOpt = noteDeFraisRepo.findByMissionId(id);
 		if (noteOpt.isPresent()) {
@@ -94,38 +103,51 @@ public class NoteDeFraisController {
 					.collect(Collectors.toList());
 			return ResponseEntity.ok(new NoteDeFraisFlat(id, items));
 		} else {
-			return ResponseEntity.status(404).body("Pas de note de frais trouvé pour la mission : " + id);
+			final String VALUE_MESSAGE_HEADER = "Pas de note de frais trouvé pour la mission : " + id;
+			return ResponseEntity.status(404).header(KEY_MESSAGE_HEADER, VALUE_MESSAGE_HEADER).body(null);
 		}
 	}
 
 	/**
-	 * Retourne la note de frais et ses frais en fonction de l'id d'une note
+	 * Vérifier que le frais est unique
 	 * 
-	 * @return ResponseEntity<?>
+	 * @param id
+	 * @param fraisFlat
+	 * @return ResponseEntity<Boolean>
 	 */
-	/*
-	 * @GetMapping("/{id}/frais") public ResponseEntity<?>
-	 * lireNoteDeFrais(@PathVariable Integer id) { if (id > 0) { NoteDeFrais note =
-	 * this.noteDeFraisRepo.findOne(id); if (note != null) { // récupérer les frais
-	 * de la notes List<LigneDeFrais> listFrais =
-	 * this.ligneDeFraisRepo.findByNoteDeFrais(note); if (!listFrais.isEmpty()) {
-	 * List<LigneDeFraisFlat> items = listFrais.stream() .map(f -> new
-	 * LigneDeFraisFlat(Integer.toString(f.getId()), f.getNature(),
-	 * Date.shortDateFormat(f.getDate()), f.getMontant().toString()))
-	 * .collect(Collectors.toList()); return ResponseEntity.ok(new
-	 * NoteDeFraisFlat(id, items)); } } } return ResponseEntity.status(404).
-	 * body("Aucun frais trouvé pour la note de frais id = " + id); }
-	 */
+	@PostMapping("/missions/{id}/frais/check")
+	public ResponseEntity<Boolean> estUniqueDateAndNatureAndMission(@PathVariable Integer id,
+			@RequestBody LigneDeFraisFlat fraisFlat) {
+
+		if (id > 0) {
+			// récupérer la mission
+			Mission mission = this.missionRepo.getOne(id);
+			if (mission != null) {
+				LocalDate date = LocalDate.parse(fraisFlat.getDate(), DateTimeFormatter.ISO_DATE);
+				List<LigneDeFrais> items = ligneDeFraisRepo.findByDateAndNatureAndNoteDeFraisMissionId(date,
+						fraisFlat.getNature(), id);
+				if (items.isEmpty()) {
+					// le frais est unique
+					return ResponseEntity.ok(true);
+				} else {
+					return ResponseEntity.ok(false);
+				}
+			}
+		}
+		final String VALUE_MESSAGE_HEADER = "Pas de mission trouvée pour l'id : " + id;
+		return ResponseEntity.status(404).header(KEY_MESSAGE_HEADER, VALUE_MESSAGE_HEADER).body(null);
+	}
 
 	/**
 	 * Ajouter la ligne de frais à une note de frais
 	 * 
 	 * @param id
 	 *            Interger : id de la note de frais
-	 * @return l'element ajouter ou le message d'erreur
+	 * @return ResponseEntity<LigneDeFraisFlat>
 	 */
 	@PostMapping("/{id}/frais")
-	public ResponseEntity<?> creerLigneDeFrais(@PathVariable Integer id, @RequestBody LigneDeFraisFlat fraisFlat) {
+	public ResponseEntity<LigneDeFraisFlat> creerLigneDeFrais(@PathVariable Integer id,
+			@RequestBody LigneDeFraisFlat fraisFlat) {
 		// récupérer la note de frais
 		if (id > 0) {
 			NoteDeFrais note = noteDeFraisRepo.findOne(id);
@@ -136,11 +158,13 @@ public class NoteDeFraisController {
 						new BigDecimal(fraisFlat.getMontant()), note);
 				// parser l'entité en model
 				frais = this.ligneDeFraisRepo.save(frais);
-				LigneDeFraisFlat newFrais = new LigneDeFraisFlat(Integer.toString(frais.getId()), frais.getNature(),
-						frais.getDate().format(DateTimeFormatter.ISO_DATE), frais.getMontant().toString());
+				LigneDeFraisFlat newFrais = new LigneDeFraisFlat(Integer.toString(frais.getId()),
+						frais.getDate().format(DateTimeFormatter.ISO_DATE), frais.getNature(),
+						frais.getMontant().toString());
 				return ResponseEntity.ok(newFrais);
 			}
 		}
-		return ResponseEntity.status(404).body("Pas de note de frais trouvé pour la mission : " + id);
+		final String VALUE_MESSAGE_HEADER = "Pas de note de frais trouvé pour la mission : " + id;
+		return ResponseEntity.status(404).header(KEY_MESSAGE_HEADER, VALUE_MESSAGE_HEADER).body(null);
 	}
 }
