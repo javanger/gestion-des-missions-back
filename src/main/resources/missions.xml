@@ -8,7 +8,7 @@
 		<property name="villeDepart" value="Bordeaux"></property>
 		<property name="villeArrivee" value="Nantes"></property>
 		<property name="transport" value="VOITURE_DE_SERVICE"></property>
-		<property name="status" value="INITIALE"></property>
+		<property name="statut" value="INITIALE"></property>
 		<property name="prime" value="0"></property>
 
 		<property name="nature">
@@ -20,7 +20,7 @@
 		<property name="villeDepart" value="Tokyo"></property>
 		<property name="villeArrivee" value="Paris"></property>
 		<property name="transport" value="AVION"></property>
-		<property name="status" value="INITIALE"></property>
+		<property name="statut" value="INITIALE"></property>
 		<property name="prime" value="100"></property>
 
 		<property name="nature">
@@ -32,7 +32,7 @@
 		<property name="villeDepart" value="Lyon"></property>
 		<property name="villeArrivee" value="Paris"></property>
 		<property name="transport" value="TRAIN"></property>
-		<property name="status" value="INITIALE"></property>
+		<property name="statut" value="INITIALE"></property>
 		<property name="prime" value="100"></property>
 
 		<property name="nature">
