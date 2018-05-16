@@ -10,9 +10,7 @@
 		<property name="transport" value="VOITURE_DE_SERVICE"></property>
 		<property name="status" value="INITIALE"></property>
 		<property name="prime" value="0"></property>
-		<property name="collaborateur">
-			<ref bean="collaborateur3" />
-		</property>
+
 		<property name="nature">
 			<ref bean="nature1" />
 		</property>
@@ -24,9 +22,7 @@
 		<property name="transport" value="AVION"></property>
 		<property name="status" value="INITIALE"></property>
 		<property name="prime" value="100"></property>
-		<property name="collaborateur">
-			<ref bean="collaborateur3" />
-		</property>
+
 		<property name="nature">
 			<ref bean="nature2" />
 		</property>
@@ -38,9 +34,7 @@
 		<property name="transport" value="TRAIN"></property>
 		<property name="status" value="INITIALE"></property>
 		<property name="prime" value="100"></property>
-		<property name="collaborateur">
-			<ref bean="collaborateur4" />
-		</property>
+
 		<property name="nature">
 			<ref bean="nature3" />
 		</property>

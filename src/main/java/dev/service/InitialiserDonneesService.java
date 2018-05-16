@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +17,16 @@ import dev.entity.LigneDeFrais;
 import dev.entity.Mission;
 import dev.entity.Nature;
 import dev.entity.NoteDeFrais;
+import dev.repository.CollaborateurRepository;
 
 @Service
 public class InitialiserDonneesService {
 	
 	@PersistenceContext
 	private EntityManager em;
+	
+	@Autowired
+	private CollaborateurRepository collaborateurRepo;
 	
 	@SuppressWarnings("resource")
 	@Transactional
@@ -43,6 +48,7 @@ public class InitialiserDonneesService {
 		Stream.of(Mission.class)
 		.flatMap(classe -> context.getBeansOfType(classe).values().stream())
 		.map(m -> {
+			m.setCollaborateur(collaborateurRepo.getOne(20));
 			m.setDateDebut(LocalDate.parse("2018-02-15"));
 			m.setDateFin(LocalDate.parse("2018-06-23"));
 			return m;

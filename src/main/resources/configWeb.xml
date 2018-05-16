@@ -4,7 +4,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
-	<import resource="classpath:collaborateurs.xml" />
 	<import resource="classpath:natures.xml" />
 	<import resource="classpath:missions.xml" />
 	<import resource="classpath:notesDeFrais.xml" />

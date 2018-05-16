@@ -22,9 +22,8 @@ import dev.entity.Mission;
 import dev.entity.NoteDeFrais;
 import dev.model.LigneDeFraisFlat;
 import dev.model.NoteDeFraisFlat;
-
-import dev.repository.CollaborateurRepository;
 import dev.repository.LigneDeFraisRepository;
+import dev.repository.MissionRepository;
 import dev.repository.NoteDeFraisRepository;
 
 @RestController
@@ -40,7 +39,7 @@ public class NoteDeFraisController {
 	private LigneDeFraisRepository ligneDeFraisRepo;
 
 	@Autowired
-	private CollaborateurRepository collaborateurRepo;
+	private MissionRepository missionRepo;
 
 
 	/**

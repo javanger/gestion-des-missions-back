@@ -6,22 +6,22 @@
 
 	<bean id="collaborateur1" class="dev.entity.Collaborateur">
 		<property name="matricule" value="A010203"></property>
-		<property name="role" value="ADMINISTRATEUR"></property>
+		<property name="role" value="Administrateur"></property>
 	</bean>
 
 	<bean id="collaborateur2" class="dev.entity.Collaborateur">
 		<property name="matricule" value="M040506"></property>
-		<property name="role" value="MANAGER"></property>
+		<property name="role" value="Manager"></property>
 	</bean>
 
 	<bean id="collaborateur3" class="dev.entity.Collaborateur">
 		<property name="matricule" value="E070809"></property>
-		<property name="role" value="EMPLOYE"></property>
+		<property name="role" value="Employe"></property>
 	</bean>
 
 	<bean id="collaborateur4" class="dev.entity.Collaborateur">
 		<property name="matricule" value="E101112"></property>
-		<property name="role" value="EMPLOYE"></property>
+		<property name="role" value="Employe"></property>
 	</bean>
 
 </beans>
