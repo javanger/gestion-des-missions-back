@@ -42,7 +42,7 @@ public class NoteDeFrais {
 	 * estRejectee: Boolean
 	 */
 	@Column(name = "EST_REJETEE")
-	Boolean estRejectee;
+	Boolean estRejetee;
 	/**
 	 * mission: Mission
 	 */
@@ -62,7 +62,7 @@ public class NoteDeFrais {
 		this.dateCreation = LocalDateTime.now();
 		this.dateValidation = null;
 		this.estValidee = false;
-		this.estRejectee = false;
+		this.estRejetee = false;
 		this.mission = mission;
 	}
 	
@@ -80,98 +80,93 @@ public class NoteDeFrais {
 		this.dateCreation = LocalDateTime.now();
 		this.dateValidation = dateValidation;
 		this.estValidee = estValidee;
-		this.estRejectee = estRejectee;
+		this.estRejetee = estRejectee;
 		this.mission = mission;
 	}
 
-	/**
+	/** Getter
 	 * @return the id
 	 */
 	public Integer getId() {
 		return id;
 	}
 
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	/**
+	/** Getter
 	 * @return the dateCreation
 	 */
 	public LocalDateTime getDateCreation() {
 		return dateCreation;
 	}
 
-	/**
-	 * @param dateCreation
-	 *            the dateCreation to set
-	 */
-	public void setDateCreation(LocalDateTime dateCreation) {
-		this.dateCreation = dateCreation;
-	}
-
-	/**
+	/** Getter
 	 * @return the dateValidation
 	 */
 	public LocalDateTime getDateValidation() {
 		return dateValidation;
 	}
 
-	/**
-	 * @param dateValidation
-	 *            the dateValidation to set
-	 */
-	public void setDateValidation(LocalDateTime dateValidation) {
-		this.dateValidation = dateValidation;
-	}
-
-	/**
+	/** Getter
 	 * @return the estValidee
 	 */
 	public Boolean getEstValidee() {
 		return estValidee;
 	}
 
-	/**
-	 * @param estValidee
-	 *            the estValidee to set
+	/** Getter
+	 * @return the estRejetee
 	 */
-	public void setEstValidee(Boolean estValidee) {
-		this.estValidee = estValidee;
+	public Boolean getEstRejetee() {
+		return estRejetee;
 	}
 
-	/**
-	 * @return the estRejectee
-	 */
-	public Boolean getEstRejectee() {
-		return estRejectee;
-	}
-
-	/**
-	 * @param estRejectee
-	 *            the estRejectee to set
-	 */
-	public void setEstRejectee(Boolean estRejectee) {
-		this.estRejectee = estRejectee;
-	}
-
-	/**
+	/** Getter
 	 * @return the mission
 	 */
 	public Mission getMission() {
 		return mission;
 	}
 
-	/**
-	 * @param mission
-	 *            the mission to set
+	/** Setter
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	/** Setter
+	 * @param dateCreation the dateCreation to set
+	 */
+	public void setDateCreation(LocalDateTime dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+
+	/** Setter
+	 * @param dateValidation the dateValidation to set
+	 */
+	public void setDateValidation(LocalDateTime dateValidation) {
+		this.dateValidation = dateValidation;
+	}
+
+	/** Setter
+	 * @param estValidee the estValidee to set
+	 */
+	public void setEstValidee(Boolean estValidee) {
+		this.estValidee = estValidee;
+	}
+
+	/** Setter
+	 * @param estRejetee the estRejetee to set
+	 */
+	public void setEstRejetee(Boolean estRejetee) {
+		this.estRejetee = estRejetee;
+	}
+
+	/** Setter
+	 * @param mission the mission to set
 	 */
 	public void setMission(Mission mission) {
 		this.mission = mission;
 	}
 
+	
 }

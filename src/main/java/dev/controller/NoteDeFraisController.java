@@ -22,10 +22,8 @@ import dev.entity.Mission;
 import dev.entity.NoteDeFrais;
 import dev.model.LigneDeFraisFlat;
 import dev.model.NoteDeFraisFlat;
-import dev.repository.CollaborateurRepository;
 import dev.repository.LigneDeFraisRepository;
 import dev.repository.MissionRepository;
-import dev.repository.NatureRepository;
 import dev.repository.NoteDeFraisRepository;
 
 @RestController
@@ -36,14 +34,13 @@ public class NoteDeFraisController {
 	private static final String KEY_MESSAGE_HEADER = "message";
 	@Autowired
 	private NoteDeFraisRepository noteDeFraisRepo;
-	@Autowired
-	private MissionRepository missionRepo;
-	@Autowired
-	private NatureRepository natureRepo;
+
 	@Autowired
 	private LigneDeFraisRepository ligneDeFraisRepo;
+
 	@Autowired
-	private CollaborateurRepository collaborateurRepo;
+	private MissionRepository missionRepo;
+
 
 	/**
 	 * Retourne toutes les notes de frais
