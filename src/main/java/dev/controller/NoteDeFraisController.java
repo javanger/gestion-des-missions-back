@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -127,7 +128,7 @@ public class NoteDeFraisController {
 			NoteDeFrais note = noteDeFraisRepo.findOne(id);
 			if (note != null) {
 				// vérifier que le frais est unique
-				if(false == estUniqueDateAndNatureAndMission(id, fraisFlat)) {
+				if (false == estUniqueDateAndNatureAndMission(id, fraisFlat)) {
 					final String VALUE_MESSAGE_HEADER = "Impossible d'ajout le frais : Un frais de même nature existe dèja pour cette date !";
 					throw new NoteDeFraisApiException(VALUE_MESSAGE_HEADER);
 				}
@@ -167,14 +168,46 @@ public class NoteDeFraisController {
 		}
 
 	}
-	
+
+	/**
+	 * Modifier la ligne de frais
+	 * 
+	 * @param id
+	 *            Interger : id de la note de frais
+	 * @return ResponseEntity<LigneDeFraisFlat>
+	 */
+	@PutMapping("/frais")
+	public ResponseEntity<LigneDeFraisFlat> creerLigneDeFrais(@RequestBody LigneDeFraisFlat fraisFlat)
+			throws NoteDeFraisApiException {
+		// récupérer la note de frais
+
+		NoteDeFrais note = noteDeFraisRepo.findOne(Integer.parseInt(fraisFlat.getId()));
+		if (note != null) {
+
+			// parser le model en entité
+			LigneDeFrais frais = new LigneDeFrais(fraisFlat.getNature(),
+					LocalDate.parse(fraisFlat.getDate(), DateTimeFormatter.ISO_DATE),
+					new BigDecimal(fraisFlat.getMontant()), note);
+			// parser l'entité en model
+			frais = this.ligneDeFraisRepo.save(frais);
+			LigneDeFraisFlat newFrais = new LigneDeFraisFlat(Integer.toString(frais.getId()),
+					frais.getDate().format(DateTimeFormatter.ISO_DATE), frais.getNature(),
+					frais.getMontant().toString());
+			return ResponseEntity.ok(newFrais);
+		}
+
+		final String VALUE_MESSAGE_HEADER = "Pas de note de frais trouvé pour la mission : " + fraisFlat.getId();
+		throw new NoteDeFraisApiException(VALUE_MESSAGE_HEADER);
+	}
+
 	@DeleteMapping("frais/{id}")
 	public String supprimerFrais(@PathVariable Integer id) throws NoteDeFraisApiException {
 		// récupérer la ligne de frais
 		LigneDeFrais frais = ligneDeFraisRepo.findOne(id);
-		if(null == frais)
+		if (null == frais)
 			throw new NoteDeFraisApiException("La ligne de frais avec l'id " + id + " n'existe pas !");
 		ligneDeFraisRepo.delete(id);
 		return "Ligne de frais supprimées avec succès !";
 	}
+
 }
