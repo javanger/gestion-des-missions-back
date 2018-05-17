@@ -39,6 +39,4 @@
 			<ref bean="nature3" />
 		</property>
 	</bean>
-
-
 </beans>
