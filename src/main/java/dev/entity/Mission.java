@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import dev.model.Status;
+import dev.model.Statut;
 import dev.model.Transport;
 
 @Entity
@@ -48,9 +48,9 @@ public class Mission {
 	@Enumerated(EnumType.STRING)
 	private Transport transport;
 
-	/** status : Status */
+	/** statut : Statut */
 	@Enumerated(EnumType.STRING)
-	private Status status;
+	private Statut statut;
 
 	/** prime : Float */
 	@Column(name = "PRIME", length = 6)
@@ -86,7 +86,7 @@ public class Mission {
 	 *            Status du traitement
 	 */
 	public Mission(LocalDate dateDebut, LocalDate dateFin, Nature nature, String villeDepart, String villeArrivee,
-			Transport transport, Status status) {
+			Transport transport, Statut status) {
 		super();
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
@@ -94,7 +94,7 @@ public class Mission {
 		this.villeDepart = villeDepart;
 		this.villeArrivee = villeArrivee;
 		this.transport = transport;
-		this.status = status;
+		this.statut = status;
 	}
 
 	/** Getter
@@ -149,8 +149,8 @@ public class Mission {
 	/** Getter
 	 * @return the status
 	 */
-	public Status getStatus() {
-		return status;
+	public Statut getStatut() {
+		return statut;
 	}
 
 	/** Getter
@@ -219,8 +219,8 @@ public class Mission {
 	/** Setter
 	 * @param status the status to set
 	 */
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setStatut(Statut statut) {
+		this.statut = statut;
 	}
 
 	/** Setter

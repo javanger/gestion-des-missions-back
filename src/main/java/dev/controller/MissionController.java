@@ -49,10 +49,11 @@ public class MissionController {
 			String villeDepart = mission.getVilleDepart();
 			String villeArrivee = mission.getVilleArrivee();
 			String transport = mission.getTransport().toString();
+			String statut = mission.getStatut().toString();
 			String prime = "1000";
 
 			MissionDetailsFraisFlat missionDetailsFraisFlat = new MissionDetailsFraisFlat(idMission, dateDebut, dateFin,
-					nature, prime, villeDepart, villeArrivee, transport);
+					nature, prime, villeDepart, villeArrivee, transport, statut);
 
 			return ResponseEntity.ok(missionDetailsFraisFlat);
 		} else {
@@ -83,10 +84,11 @@ public class MissionController {
 				String villeDepart = mission.getVilleDepart();
 				String villeArrivee = mission.getVilleArrivee();
 				String transport = mission.getTransport().toString();
+				String statut = mission.getStatut().toString();
 				String prime = "1000";
 
 				MissionDetailsFraisFlat missionDetailsFraisFlat = new MissionDetailsFraisFlat(id, dateDebut, dateFin,
-						nature, prime, villeDepart, villeArrivee, transport);
+						nature, prime, villeDepart, villeArrivee, transport, statut);
 
 				missionsDetailsFraisFlats.add(missionDetailsFraisFlat);
 			}

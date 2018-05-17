@@ -30,6 +30,9 @@ public class MissionDetailsFraisFlat {
 
 	/** estEchue : boolean */
 	private boolean estEchue;
+	
+	/** statut : String */
+	private String statut;
 
 	/** Constructeur */
 	public MissionDetailsFraisFlat() {
@@ -38,7 +41,7 @@ public class MissionDetailsFraisFlat {
 
 	/** Constructeur */
 	public MissionDetailsFraisFlat(String id, String dateDebut, String dateFin, String nature, String estimationPrime,
-			String villeDepart, String villeArrivee, String transport) {
+			String villeDepart, String villeArrivee, String transport, String statut) {
 		super();
 		this.id = id;
 		this.dateDebut = dateDebut;
@@ -48,178 +51,148 @@ public class MissionDetailsFraisFlat {
 		this.villeDepart = villeDepart;
 		this.villeArrivee = villeArrivee;
 		this.transport = transport;
+		this.statut = statut;
 		estEchue = LocalDate.parse(dateFin, DateTimeFormatter.ISO_DATE).isBefore(LocalDate.now());
 	}
 
-	/**
-	 * Getter
-	 * 
+	/** Getter
 	 * @return the id
 	 */
 	public String getId() {
 		return id;
 	}
 
-	/**
-	 * Getter
-	 * 
+	/** Getter
 	 * @return the dateDebut
 	 */
 	public String getDateDebut() {
 		return dateDebut;
 	}
 
-	/**
-	 * Getter
-	 * 
+	/** Getter
 	 * @return the dateFin
 	 */
 	public String getDateFin() {
 		return dateFin;
 	}
 
-	/**
-	 * Getter
-	 * 
+	/** Getter
 	 * @return the nature
 	 */
 	public String getNature() {
 		return nature;
 	}
 
-	/**
-	 * Getter
-	 * 
+	/** Getter
 	 * @return the estimationPrime
 	 */
 	public String getEstimationPrime() {
 		return estimationPrime;
 	}
 
-	/**
-	 * Getter
-	 * 
+	/** Getter
 	 * @return the villeDepart
 	 */
 	public String getVilleDepart() {
 		return villeDepart;
 	}
 
-	/**
-	 * Getter
-	 * 
+	/** Getter
 	 * @return the villeArrivee
 	 */
 	public String getVilleArrivee() {
 		return villeArrivee;
 	}
 
-	/**
-	 * Getter
-	 * 
+	/** Getter
 	 * @return the transport
 	 */
 	public String getTransport() {
 		return transport;
 	}
 
-	/**
-	 * Getter
-	 * 
+	/** Getter
 	 * @return the estEchue
 	 */
 	public boolean isEstEchue() {
 		return estEchue;
 	}
 
-	/**
-	 * Setter
-	 * 
-	 * @param id
-	 *            the id to set
+	/** Getter
+	 * @return the statuts
+	 */
+	public String getStatut() {
+		return statut;
+	}
+
+	/** Setter
+	 * @param id the id to set
 	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 
-	/**
-	 * Setter
-	 * 
-	 * @param dateDebut
-	 *            the dateDebut to set
+	/** Setter
+	 * @param dateDebut the dateDebut to set
 	 */
 	public void setDateDebut(String dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
-	/**
-	 * Setter
-	 * 
-	 * @param dateFin
-	 *            the dateFin to set
+	/** Setter
+	 * @param dateFin the dateFin to set
 	 */
 	public void setDateFin(String dateFin) {
 		this.dateFin = dateFin;
 	}
 
-	/**
-	 * Setter
-	 * 
-	 * @param nature
-	 *            the nature to set
+	/** Setter
+	 * @param nature the nature to set
 	 */
 	public void setNature(String nature) {
 		this.nature = nature;
 	}
 
-	/**
-	 * Setter
-	 * 
-	 * @param estimationPrime
-	 *            the estimationPrime to set
+	/** Setter
+	 * @param estimationPrime the estimationPrime to set
 	 */
 	public void setEstimationPrime(String estimationPrime) {
 		this.estimationPrime = estimationPrime;
 	}
 
-	/**
-	 * Setter
-	 * 
-	 * @param villeDepart
-	 *            the villeDepart to set
+	/** Setter
+	 * @param villeDepart the villeDepart to set
 	 */
 	public void setVilleDepart(String villeDepart) {
 		this.villeDepart = villeDepart;
 	}
 
-	/**
-	 * Setter
-	 * 
-	 * @param villeArrivee
-	 *            the villeArrivee to set
+	/** Setter
+	 * @param villeArrivee the villeArrivee to set
 	 */
 	public void setVilleArrivee(String villeArrivee) {
 		this.villeArrivee = villeArrivee;
 	}
 
-	/**
-	 * Setter
-	 * 
-	 * @param transport
-	 *            the transport to set
+	/** Setter
+	 * @param transport the transport to set
 	 */
 	public void setTransport(String transport) {
 		this.transport = transport;
 	}
 
-	/**
-	 * Setter
-	 * 
-	 * @param estEchue
-	 *            the estEchue to set
+	/** Setter
+	 * @param estEchue the estEchue to set
 	 */
 	public void setEstEchue(boolean estEchue) {
 		this.estEchue = estEchue;
+	}
+
+	/** Setter
+	 * @param statuts the statuts to set
+	 */
+	public void setStatut(String statut) {
+		this.statut = statut;
 	}
 
 }
