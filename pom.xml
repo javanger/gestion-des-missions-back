@@ -68,7 +68,7 @@
         <profile>
             <id>dev-h2</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
                 <jdbc.driver>org.h2.Driver</jdbc.driver>
@@ -111,6 +111,9 @@
         </profile>
         <profile>
             <id>prod</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
                 <jdbc.url>jdbc:mysql://${env.MYSQL_ADDON_HOST}:${env.MYSQL_ADDON_PORT}/${env.MYSQL_ADDON_DB}</jdbc.url>
