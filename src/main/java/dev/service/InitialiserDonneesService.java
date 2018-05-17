@@ -50,7 +50,7 @@ public class InitialiserDonneesService {
 		.map(m -> {
 			m.setCollaborateur(collaborateurRepo.getOne(20));
 			m.setDateDebut(LocalDate.parse("2018-02-15"));
-			m.setDateFin(LocalDate.parse("2018-06-23"));
+					m.setDateFin(LocalDate.parse("2018-05-15"));
 			return m;
 		}).forEach(em::persist);
 		
