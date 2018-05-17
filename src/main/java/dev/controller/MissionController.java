@@ -1,5 +1,6 @@
 package dev.controller;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +11,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.entity.Mission;
 import dev.model.MissionDetailsFraisFlat;
+import dev.model.NewMission;
+import dev.repository.CollaborateurRepository;
 import dev.repository.MissionRepository;
+import dev.repository.NatureRepository;
 
 @RestController
 @CrossOrigin
@@ -24,6 +30,12 @@ public class MissionController {
 
 	@Autowired
 	private MissionRepository missionRepo;
+
+	@Autowired
+	private CollaborateurRepository collaborateurRepository;
+
+	@Autowired
+	private NatureRepository natureRepository;
 
 	@GetMapping
 	public List<Mission> searchAll() {
@@ -97,6 +109,33 @@ public class MissionController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Matricule inconnu");
 		}
 
+	}
+
+	@PostMapping("/collaborateur/{matricule}")
+	public ResponseEntity<?> createMission(@PathVariable String matricule, @RequestBody NewMission newMission) {
+
+		Mission mission = new Mission();
+
+		mission.setDateDebut(LocalDate.parse(newMission.getDateDebut()));
+		mission.setDateFin(LocalDate.parse(newMission.getDateFin()));
+		mission.setCollaborateur(collaborateurRepository.findByMatricule(matricule).get());
+		mission.setNature(natureRepository.findByLibelle(newMission.getNature()).get());
+		mission.setVilleDepart(newMission.getVilleDepart());
+		mission.setVilleArrivee(newMission.getVilleArrivee());
+
+		missionRepo.save(mission);
+
+		return ResponseEntity.ok(mission);
+	}
+
+	/**
+	 * Retourne la liste des transports disponible pour les missions
+	 * 
+	 * @return string[]
+	 */
+	@GetMapping("/transports")
+	public String[] listerTransports() {
+		return new String[] { "Avion", "Covoiturage", "Train", "Voiture de service" };
 	}
 
 }
