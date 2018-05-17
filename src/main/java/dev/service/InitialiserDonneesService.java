@@ -54,6 +54,7 @@ public class InitialiserDonneesService {
 			return m;
 		}).forEach(em::persist);
 		
+
 		Stream.of(NoteDeFrais.class)
 		.flatMap(classe -> context.getBeansOfType(classe).values().stream())
 		.map(n -> {
