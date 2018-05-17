@@ -23,7 +23,7 @@ public class Collaborateur {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	/** matricule : String */
-	@Column(name = "MATRICULE", nullable = false, unique = true)
+	@Column(name = "MATRICULE", nullable = false)
 	private String matricule;
 	/** motDePasse : String */
 	@Column(name = "MOT_DE_PASSE", nullable = false)
@@ -33,6 +33,7 @@ public class Collaborateur {
 	private Boolean estActif;
 	/** role : String */
 	@Column(name = "ROLE", nullable = false)
+
 	@Enumerated(EnumType.STRING)
 	private Role role;
 

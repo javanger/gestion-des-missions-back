@@ -44,6 +44,7 @@ public class Nature {
 	}
 
 	/** Constructor
+	 * Initialise la date pour les natures non expirables
 	 * @param libelle Libelle de la prime
 	 * @param estFacturee Possède une facturation ou non
 	 * @param aUnePrime Possède une prime ou non
@@ -51,12 +52,12 @@ public class Nature {
 	 * @param pourcentagePrime Pourcentage de la prime
 	 */
 	public Nature(String libelle, boolean estFacturee, boolean aUnePrime, Integer tjm, Integer pourcentagePrime) {
-		super();
 		this.libelle = libelle;
 		this.estFacturee = estFacturee;
 		this.aUnePrime = aUnePrime;
 		this.tjm = tjm;
 		this.pourcentagePrime = pourcentagePrime;
+		this.dateFin = LocalDate.parse("2100-01-01");
 	}
 
 	/** Getter

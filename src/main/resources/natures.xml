@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<bean id="nature1" class="dev.entity.Nature">
+		<property name="libelle" value="Formation"></property>
+		<property name="estFacturee" value="true"></property>
+		<property name="aUnePrime" value="true"></property>
+		<property name="tjm" value="100"></property>
+		<property name="pourcentagePrime" value="5"></property>
+	</bean>
+
+	<bean id="nature2" class="dev.entity.Nature">
+		<property name="libelle" value="Transport"></property>
+		<property name="estFacturee" value="false"></property>
+		<property name="aUnePrime" value="false"></property>
+	</bean>
+
+	<bean id="nature3" class="dev.entity.Nature">
+		<property name="libelle" value="Expertise"></property>
+		<property name="estFacturee" value="true"></property>
+		<property name="aUnePrime" value="false"></property>
+		<property name="tjm" value="200"></property>
+	</bean>
+
+</beans>

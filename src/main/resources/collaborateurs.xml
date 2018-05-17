@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<bean id="collaborateur1" class="dev.entity.Collaborateur">
+		<property name="matricule" value="A010203"></property>
+		<property name="role" value="Administrateur"></property>
+	</bean>
+
+	<bean id="collaborateur2" class="dev.entity.Collaborateur">
+		<property name="matricule" value="M040506"></property>
+		<property name="role" value="Manager"></property>
+	</bean>
+
+	<bean id="collaborateur3" class="dev.entity.Collaborateur">
+		<property name="matricule" value="E070809"></property>
+		<property name="role" value="Employe"></property>
+	</bean>
+
+	<bean id="collaborateur4" class="dev.entity.Collaborateur">
+		<property name="matricule" value="E101112"></property>
+		<property name="role" value="Employe"></property>
+	</bean>
+
+</beans>
