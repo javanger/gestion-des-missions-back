@@ -181,22 +181,21 @@ public class NoteDeFraisController {
 			throws NoteDeFraisApiException {
 		// récupérer la note de frais
 
-		NoteDeFrais note = noteDeFraisRepo.findOne(Integer.parseInt(fraisFlat.getId()));
-		if (note != null) {
+		LigneDeFrais frais = ligneDeFraisRepo.findOne(Integer.parseInt(fraisFlat.getId()));
+		if (frais != null) {
 
 			// parser le model en entité
-			LigneDeFrais frais = new LigneDeFrais(fraisFlat.getNature(),
-					LocalDate.parse(fraisFlat.getDate(), DateTimeFormatter.ISO_DATE),
-					new BigDecimal(fraisFlat.getMontant()), note);
+			frais.setNature(fraisFlat.getNature());
+			frais.setMontant(new BigDecimal(fraisFlat.getMontant()));
+			frais.setDate(LocalDate.parse(fraisFlat.getDate(), DateTimeFormatter.ISO_DATE));
+			
 			// parser l'entité en model
 			frais = this.ligneDeFraisRepo.save(frais);
-			LigneDeFraisFlat newFrais = new LigneDeFraisFlat(Integer.toString(frais.getId()),
-					frais.getDate().format(DateTimeFormatter.ISO_DATE), frais.getNature(),
-					frais.getMontant().toString());
-			return ResponseEntity.ok(newFrais);
+		
+			return ResponseEntity.ok(fraisFlat);
 		}
 
-		final String VALUE_MESSAGE_HEADER = "Pas de note de frais trouvé pour la mission : " + fraisFlat.getId();
+		final String VALUE_MESSAGE_HEADER = "Pas de frais trouvé pour l'id : " + fraisFlat.getId();
 		throw new NoteDeFraisApiException(VALUE_MESSAGE_HEADER);
 	}
 
